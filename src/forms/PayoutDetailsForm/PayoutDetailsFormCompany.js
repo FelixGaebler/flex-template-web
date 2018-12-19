@@ -8,11 +8,11 @@ import * as validators from '../../util/validators';
 import PayoutDetailsAddress from './PayoutDetailsAddress';
 import PayoutDetailsBankDetails from './PayoutDetailsBankDetails';
 import PayoutDetailsPersonalDetails from './PayoutDetailsPersonalDetails';
+import { stripeCountryConfigs } from './PayoutDetailsForm';
 import css from './PayoutDetailsForm.css';
 
-const PayoutDetailsFormCompanyComponent = ({ fieldRenderProps }) => {
+const PayoutDetailsFormCompanyComponent = ({ fieldRenderProps, country }) => {
   const { disabled, form, intl, values } = fieldRenderProps;
-  const { country } = values;
 
   const companyNameLabel = intl.formatMessage({ id: 'PayoutDetailsForm.companyNameLabel' });
   const companyNamePlaceholder = intl.formatMessage({
@@ -46,6 +46,11 @@ const PayoutDetailsFormCompanyComponent = ({ fieldRenderProps }) => {
     )
   );
 
+  const showPersonalAddressField =
+    country &&
+    stripeCountryConfigs(country).companyConfig &&
+    stripeCountryConfigs(country).companyConfig.personalAddress;
+
   return (
     <React.Fragment>
       {country ? (
@@ -53,28 +58,28 @@ const PayoutDetailsFormCompanyComponent = ({ fieldRenderProps }) => {
           <div className={css.sectionContainer}>
             <h3 className={css.subTitle}>
               <FormattedMessage id="PayoutDetailsForm.companyDetailsTitle" />
-            </h3>     
-              <FieldTextInput
-                id="companyName"
-                name="companyName"
-                disabled={disabled}
-                type="text"
-                autoComplete="company-name"
-                label={companyNameLabel}
-                placeholder={companyNamePlaceholder}
-                validate={companyNameRequired}
-              />
+            </h3>
+            <FieldTextInput
+              id="company.companyName"
+              name="company.companyName"
+              disabled={disabled}
+              type="text"
+              autoComplete="company-name"
+              label={companyNameLabel}
+              placeholder={companyNamePlaceholder}
+              validate={companyNameRequired}
+            />
 
-              <FieldTextInput
-                id="companyTaxId"
-                name="companyTaxId"
-                disabled={disabled}
-                type="text"
-                autoComplete="company-tax-id"
-                label={companyTaxIdLabel}
-                placeholder={companyTaxIdPlaceholder}
-                validate={companyTaxIdRequired}
-              />
+            <FieldTextInput
+              id="company.companyTaxId"
+              name="company.companyTaxId"
+              disabled={disabled}
+              type="text"
+              autoComplete="company-tax-id"
+              label={companyTaxIdLabel}
+              placeholder={companyTaxIdPlaceholder}
+              validate={companyTaxIdRequired}
+            />
           </div>
 
           <PayoutDetailsAddress
@@ -82,17 +87,27 @@ const PayoutDetailsFormCompanyComponent = ({ fieldRenderProps }) => {
             intl={intl}
             disabled={disabled}
             form={form}
-            companyAddress
+            fieldId="company.address"
           />
 
-          <PayoutDetailsBankDetails country={country} disabled={disabled} />
+          <PayoutDetailsBankDetails country={country} disabled={disabled} fieldId="company" />
 
           <PayoutDetailsPersonalDetails
             intl={intl}
             disabled={disabled}
             values={values}
             country={country}
+            fieldId="company"
           />
+          {showPersonalAddressField ? (
+            <PayoutDetailsAddress
+              country={country}
+              intl={intl}
+              disabled={disabled}
+              form={form}
+              fieldId="company.personalAddress"
+            />
+          ) : null}
         </React.Fragment>
       ) : null}
     </React.Fragment>

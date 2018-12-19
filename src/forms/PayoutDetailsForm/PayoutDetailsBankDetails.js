@@ -13,7 +13,7 @@ const countryCurrency = countryCode => {
 };
 
 const PayoutDetailsBankDetails = props => {
-  const { country, disabled } = props;
+  const { country, disabled, fieldId } = props;
 
   // StripeBankAccountTokenInputField handles the error messages
   // internally, we just have to make sure we require a valid token
@@ -27,7 +27,7 @@ const PayoutDetailsBankDetails = props => {
       </h3>
       <StripeBankAccountTokenInputField
         disabled={disabled}
-        name="bankAccountToken"
+        name={`${fieldId}.bankAccountToken`}
         formName="PayoutDetailsForm"
         country={country}
         currency={countryCurrency(country)}
