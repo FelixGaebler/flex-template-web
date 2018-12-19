@@ -15,6 +15,7 @@ export { default as EditListingPricingPanel } from './EditListingPricingPanel/Ed
 export { default as EditListingWizard } from './EditListingWizard/EditListingWizard';
 export { default as ExpandingTextarea } from './ExpandingTextarea/ExpandingTextarea';
 export { default as ExternalLink } from './ExternalLink/ExternalLink';
+export { default as FieldArray } from './FieldArray/FieldArray';
 export { default as FieldBirthdayInput } from './FieldBirthdayInput/FieldBirthdayInput';
 export { default as FieldBoolean } from './FieldBoolean/FieldBoolean';
 export { default as FieldCheckbox } from './FieldCheckbox/FieldCheckbox';

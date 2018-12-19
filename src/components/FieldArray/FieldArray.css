@@ -1,0 +1,19 @@
+@import '../../marketplace.css';
+
+.root {
+}
+
+.formRow {
+  display: flex;
+  justify-content: space-between;
+  flex-shrink: 0;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.field {
+  width: 100%;
+}
+.buttonsWrapper button {
+  margin: 8px;
+}
