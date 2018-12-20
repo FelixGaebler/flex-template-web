@@ -86,3 +86,34 @@
     cursor: pointer;
   }
 }
+
+.fieldArrayAdd {
+  @apply --marketplaceLinkStyles;
+  font-weight: var(--fontWeightMedium);
+}
+
+.fieldArrayRemove {
+  @apply --marketplaceH5FontStyles;
+  color: var(--matterColorAnti);
+  float: right;
+
+  &:hover {
+    color: var(--matterColor);
+  }
+}
+
+.closeIcon {
+  @apply --marketplaceModalCloseIcon;
+}
+
+.additionalOwnerWrapper {
+  margin-bottom: 35px;
+
+  @media (--viewportMedium) {
+    margin-bottom: 56px;
+  }
+}
+
+.additionalOwnerWrapper .sectionContainer {
+  margin-bottom: 24px;
+}

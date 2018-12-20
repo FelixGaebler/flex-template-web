@@ -31,9 +31,13 @@ const PayoutDetailsAddress = props => {
     return countryConfig[field];
   };
 
+  const showTitle =
+    fieldId === 'company.address' ||
+    fieldId === 'individual' ||
+    fieldId === 'company.personalAddress';
   const addressTitle = intl.formatMessage({
     id:
-      fieldId === 'company'
+      fieldId === 'company.address'
         ? 'PayoutDetailsForm.companyAddressTitle'
         : 'PayoutDetailsForm.streetAddressLabel',
   });
@@ -98,7 +102,7 @@ const PayoutDetailsAddress = props => {
 
   return (
     <div className={css.sectionContainer}>
-      <h3 className={css.subTitle}>{addressTitle}</h3>
+      {showTitle ? <h3 className={css.subTitle}>{addressTitle}</h3> : null}
 
       {showAddressLine ? (
         <FieldTextInput
