@@ -5,14 +5,17 @@ import classNames from 'classnames';
 import css from './IconClose.css';
 
 const IconClose = props => {
-  const { className, rootClassName } = props;
+  const { className, rootClassName, size } = props;
   const classes = classNames(rootClassName || css.root, className);
+
+  // Use given size as width and height or default to 12px
+  const svgSize = size ? size : 12;
 
   return (
     <svg
       className={classes}
-      width="12"
-      height="12"
+      width={svgSize}
+      height={svgSize}
       viewBox="0 0 12 12"
       xmlns="http://www.w3.org/2000/svg"
     >
