@@ -1,0 +1,347 @@
+@import '../../marketplace.css';
+
+:root {
+  --ManageAvailabilityCalendar_gridColor: #d2d2d2;
+  --ManageAvailabilityCalendar_reservedColor: #e0f8e7;
+  --ManageAvailabilityCalendar_failedColor: #ffcccc;
+}
+
+.root {
+  @apply --marketplaceH5FontStyles;
+  margin-top: 0;
+  margin-bottom: 0;
+  overflow-x: hidden;
+  z-index: 0;
+
+  & :global(.CalendarMonth_caption) {
+    @apply --marketplaceH2FontStyles;
+    text-align: left;
+    padding-bottom: 45px;
+
+    margin-left: 103px;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    & strong {
+      font-weight: 500;
+      letter-spacing: 0.2px;
+    }
+  }
+
+  & :global(.DayPicker) {
+    margin: 0 auto;
+    box-shadow: none;
+  }
+
+  & :global(.DayPicker__horizontal) {
+    background-color: transparent;
+    margin-left: -18px;
+  }
+
+  & :global(.DayPicker_week-header) {
+    top: 55px;
+
+    & small {
+      font-size: 13px;
+      font-weight: 500;
+    }
+  }
+
+  & :global(.DayPickerNavigation__horizontal) {
+    width: 80px;
+    margin-left: 18px;
+    position: relative;
+
+    & :first-child {
+      border-top-left-radius: 2px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 2px;
+    }
+
+    & :last-child {
+      /* The navigation arrows have 9px padding. Add -9px margin to
+      align the arrows with the calendar */
+      left: 39px;
+      right: unset;
+      border-top-left-radius: 0;
+      border-top-right-radius: 2px;
+      border-bottom-right-radius: 2px;
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  & :global(.DayPickerNavigation_button__horizontal),
+  & :global(.DayPickerNavigation_button__horizontal) {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 19px;
+    left: 0;
+
+    padding: 7px 15px;
+    border: solid 1px var(--matterColorNegative);
+    background-color: var(--matterColorBright);
+
+    &:hover {
+      & svg {
+        fill: var(--matterColorDark);
+      }
+    }
+    &:focus {
+      outline-offset: -4px;
+    }
+  }
+
+  & :global(.CalendarMonthGrid) {
+    background-color: transparent;
+  }
+
+  & :global(.CalendarMonth) {
+    background-color: transparent;
+  }
+
+  & :global(.CalendarMonth_table) {
+    border: 1px solid var(--ManageAvailabilityCalendar_gridColor);
+  }
+
+  & :global(.CalendarDay__default) {
+    border: 0;
+    background-color: var(--ManageAvailabilityCalendar_gridColor);
+
+    &:hover {
+      border: 0;
+      background-color: var(--ManageAvailabilityCalendar_gridColor);
+    }
+  }
+
+  & :global(.CalendarDay__selected) {
+    color: var(--matterColor);
+  }
+
+  & :global(.DayPickerKeyboardShortcuts_show__bottomRight) {
+    right: -20px;
+    right: 19px;
+    bottom: -24px;
+  }
+}
+
+@media (--viewportMedium) {
+  .root {
+    margin-top: 0;
+    margin-bottom: 0;
+
+    & :global(.DayPickerNavigation_leftButton__horizontal),
+    & :global(.DayPickerNavigation_rightButton__horizontal) {
+      background-color: var(--matterColorLight);
+    }
+  }
+}
+
+@media (--viewportLarge) {
+  .root {
+    & :global(.DayPickerNavigation_leftButton__horizontal),
+    & :global(.DayPickerNavigation_rightButton__horizontal) {
+      background-color: var(--matterColorLight);
+    }
+  }
+}
+
+.dayWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.day {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 8px;
+}
+@media (min-width: 550px) {
+  .day {
+    padding: 15px;
+  }
+}
+
+.dayNumber {
+  font-size: 14px;
+  line-height: 14px;
+}
+
+.default {
+  composes: day;
+  background-color: white;
+}
+
+.outsideRange {
+  composes: day;
+  background-color: var(--matterColorNegative);
+
+  & .dayNumber {
+    text-decoration: line-through;
+    color: lightgrey;
+  }
+}
+
+.today {
+  composes: day;
+  background-color: white;
+
+  & .dayNumber {
+    position: relative;
+    text-decoration: none;
+
+    &:after {
+      position: absolute;
+      content: '';
+      height: 2px;
+      bottom: -4px;
+
+      /* center - (optional) use with adjusting width   */
+      margin: 0 auto;
+      left: 0;
+      right: 0;
+      width: 100%;
+      background: var(--matterColor);
+      transition: 0.5s;
+    }
+  }
+}
+
+.blocked {
+  composes: day;
+  background-color: var(--matterColorNegative);
+}
+
+.reserved {
+  composes: day;
+  background-color: var(--ManageAvailabilityCalendar_reservedColor);
+}
+
+.inProgress {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -14px;
+  margin-left: -14px;
+
+  width: 28px;
+  height: 28px;
+  stroke: var(--marketplaceColor);
+  stroke-width: 3px;
+}
+
+.exceptionError {
+  opacity: 1;
+
+  /* Animation */
+  animation-name: errored;
+  animation-duration: 800ms;
+  animation-iteration-count: 1;
+  animation-timing-function: ease;
+}
+
+@keyframes errored {
+  30%,
+  70% {
+    background-color: var(--ManageAvailabilityCalendar_failedColor);
+  }
+}
+
+.monthElement {
+  display: flex;
+  position: relative;
+}
+
+.monthString {
+  font-weight: var(--fontWeightSemiBold);
+
+  &:first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.monthInProgress {
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+  margin-top: 9px;
+
+  stroke: var(--marketplaceColor);
+  stroke-width: 4px;
+}
+
+.error {
+  color: var(--failColor);
+  margin: 0 0 24px 0;
+}
+
+@media (--viewportMedium) {
+  .error {
+    margin: 0 0 24px 0;
+  }
+}
+
+.rootNextMonthIcon,
+.rootPreviousMonthIcon {
+  stroke: var(--matterColor);
+  fill: var(--matterColor);
+}
+
+.legend {
+  display: flex;
+  flex-flow: column;
+}
+
+@media screen and (min-width: 400px) {
+  .legend {
+    flex-flow: row;
+    flex-wrap: wrap;
+    margin: 0 auto;
+
+    /* Add space for showing keyboard shortcuts button */
+    padding-right: 35px;
+  }
+}
+
+@media (--viewportLarge) {
+  .legend {
+    margin: 0;
+  }
+}
+
+.legendRow {
+  display: flex;
+  flex-grow: row;
+  line-height: 24px;
+  margin-right: 24px;
+}
+.legendColor {
+  width: 20px;
+  height: 20px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+.legendAvailableColor {
+  composes: legendColor;
+  background-color: var(--matterColorLight);
+  border: solid 2px var(--matterColorNegative);
+}
+.legendReservedColor {
+  composes: legendColor;
+  background-color: var(--ManageAvailabilityCalendar_reservedColor);
+}
+.legendBlockedColor {
+  composes: legendColor;
+  background-color: var(--matterColorNegative);
+}
+
+.legendText {
+  white-space: nowrap;
+}
