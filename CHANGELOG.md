@@ -14,6 +14,9 @@ way to update this template, but currently, we follow a pattern:
 
 ## Upcoming version 2018-XX-XX
 
+- [add] Support for Stripe company accounts. Multiple new translation keys were added and they might
+  not be translated into French yet. `PayoutDetailsForm` was separated into smaller subcomponents.  
+  [#980](https://github.com/sharetribe/flex-template-web/pull/980)
 - [fix] yarn.lock file was not up to date
   [#986](https://github.com/sharetribe/flex-template-web/pull/986)
 - [add] Add an image of fork button to the deploy to production guide.
